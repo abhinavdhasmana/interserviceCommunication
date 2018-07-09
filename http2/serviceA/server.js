@@ -20,6 +20,7 @@ const options = {
 };
 
 const serverOptions = {
+  allowHTTP1: true,
   key: fs.readFileSync('../certificates/localhost-privatekey.pem'),
   cert: fs.readFileSync('../certificates/localhost-certificate.pem'),
 };
@@ -49,6 +50,13 @@ server.route({
       throw Boom.clientTimeout(err);
     }
   },
+});
+
+
+server.route({
+  method: 'GET',
+  path: '/data',
+  handler: async (request, h) => h.response({ data: 'data' }),
 });
 
 const start = async () => {
