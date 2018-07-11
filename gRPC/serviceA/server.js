@@ -1,24 +1,22 @@
 const grpc = require('grpc');
 const Hapi = require('hapi');
 const Good = require('good');
-const Boom = require('boom');
+// const Boom = require('boom');
 
 
-const protoPath = __dirname + '/../serviceB/serviceB.proto';
+const protoPath = `${__dirname}/../serviceB/serviceB.proto`;
 const proto = grpc.load(protoPath);
 
 const client = new proto.SampleDataService('localhost:8001', grpc.credentials.createInsecure());
-const getDataViagRPC = async () => {
-  return new Promise((resolve, reject) => {
-    client.getSampleData({}, (err, response) => {
-      if (!response.err) {
-        resolve(response);
-      } else {
-        reject(err);
-      }
-    });
-  })
-}
+const getDataViagRPC = async () => new Promise((resolve, reject) => {
+  client.getSampleData({}, (err, response) => {
+    if (!response.err) {
+      resolve(response);
+    } else {
+      reject(err);
+    }
+  });
+});
 
 const options = {
   reporters: {
