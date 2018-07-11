@@ -1,0 +1,29 @@
+{
+  "name": "interservicecommunication",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Abhinav Dhasmana",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "boom": "^7.2.0",
+    "good": "^8.1.1",
+    "good-console": "^7.1.0",
+    "good-squeeze": "^5.1.0",
+    "google-protobuf": "^3.6.0",
+    "grpc": "^1.13.0",
+    "grpcli": "^0.7.5",
+    "hapi": "^17.5.2",
+    "pm2": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0"
+  }
+}
