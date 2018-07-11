@@ -26,7 +26,11 @@ server.route({
   handler: async (request, h) => {
     const response = await new Promise((resolve) => {
       setTimeout(() => {
-        resolve('This is resolved data');
+        resolve({
+          id: 1,
+          name: 'Abhinav Dhasmana',
+          enjoy_coding: true,
+        });
       }, 10);
     });
     return h.response(response);
