@@ -1,7 +1,6 @@
 const Hapi = require('hapi');
 const Good = require('good');
 const Boom = require('boom');
-// const Axios = require('axios');
 const Http2 = require('http2'); // eslint-disable-line
 const fs = require('fs');
 
@@ -43,9 +42,43 @@ server.route({
   path: '/',
   handler: async (request, h) => {
     try {
-      console.log('making request');
-      const req = client.request({ ':path': '/' });
-      return req.on('end', data => h.response(data));
+      const idPromise = new Promise((resolve) => {
+        const req = client.request({ ':path': '/id' });
+        console.log('making 1');
+        let data = '';
+        req.on('data', (chunk) => {
+          console.log('data', chunk);
+          data += chunk;
+        });
+        req.on('end', () => resolve(JSON.parse(data)));
+      });
+
+
+      const namePromise = new Promise((resolve) => {
+        const req = client.request({ ':path': '/name' });
+        console.log('making 2');
+        let data = '';
+        req.on('data', (chunk) => { data += chunk; });
+        req.on('end', () => resolve(JSON.parse(data)));
+      });
+
+      const passionPromise = new Promise((resolve) => {
+        const req = client.request({ ':path': '/passion' });
+        console.log('making 3');
+        let data = '';
+        req.on('data', (chunk) => { data += chunk; });
+        req.on('end', () => resolve(JSON.parse(data)));
+      });
+
+
+      const allResults = await Promise.all([idPromise, namePromise, passionPromise]);
+      console.log('here', allResults);
+      const combinedResponse = allResults.reduce(
+        (accumulator, currentValue) => ({ ...accumulator, ...currentValue }),
+        {},
+      );
+      console.log('here', combinedResponse);
+      return h.response(combinedResponse);
     } catch (err) {
       throw Boom.clientTimeout(err);
     }

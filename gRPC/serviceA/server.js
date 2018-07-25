@@ -8,8 +8,32 @@ const protoPath = `${__dirname}/../serviceB/serviceB.proto`;
 const proto = grpc.load(protoPath);
 
 const client = new proto.SampleDataService('localhost:8001', grpc.credentials.createInsecure());
-const getDataViagRPC = async () => new Promise((resolve, reject) => {
-  client.getSampleData({}, (err, response) => {
+const getIdViagRPC = () => new Promise((resolve, reject) => {
+  client.GetId({}, (err, response) => {
+    console.log('response', response);
+    console.log('err', err);
+    if (!response.err) {
+      resolve(response);
+    } else {
+      reject(err);
+    }
+  });
+});
+const getNameViagRPC = () => new Promise((resolve, reject) => {
+  client.GetName({}, (err, response) => {
+    console.log('response', response);
+    console.log('err', err);
+    if (!response.err) {
+      resolve(response);
+    } else {
+      reject(err);
+    }
+  });
+});
+const getPassionViagRPC = () => new Promise((resolve, reject) => {
+  client.GetPassion({}, (err, response) => {
+    console.log('response', response);
+    console.log('err', err);
     if (!response.err) {
       resolve(response);
     } else {
@@ -41,9 +65,12 @@ server.route({
   method: 'GET',
   path: '/',
   handler: async (request, h) => {
-    const result = await getDataViagRPC();
-    console.log(result);
-    return h.response(result);
+    const allResults = await Promise.all([getIdViagRPC(), getNameViagRPC(), getPassionViagRPC()]);
+    const combinedResponse = allResults.reduce(
+      (accumulator, currentValue) => ({ ...accumulator, ...currentValue }),
+      {},
+    );
+    return h.response(combinedResponse);
   },
 });
 

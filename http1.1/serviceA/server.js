@@ -27,11 +27,26 @@ server.route({
   path: '/',
   handler: async (request, h) => {
     try {
-      const response = await Axios({
-        url: 'http://localhost:8001',
+      const idRequest = Axios({
+        url: 'http://localhost:8001/id',
         method: 'GET',
       });
-      return h.response(response.data);
+      const nameRequest = Axios({
+        url: 'http://localhost:8001/name',
+        method: 'GET',
+      });
+
+      const passionRequest = Axios({
+        url: 'http://localhost:8001/passion',
+        method: 'GET',
+      });
+      const promiseArray = [idRequest, nameRequest, passionRequest];
+      const results = await Promise.all(promiseArray);
+      const combinedResponse = results.reduce(
+        (accumulator, currentValue) => ({ ...accumulator, ...currentValue.data }),
+        {},
+      );
+      return h.response(combinedResponse);
     } catch (err) {
       throw Boom.clientTimeout(err);
     }

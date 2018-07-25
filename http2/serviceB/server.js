@@ -32,13 +32,41 @@ const server = Hapi.server({
 
 server.route({
   method: 'GET',
-  path: '/',
+  path: '/id',
   handler: async (request, h) => {
     const response = await new Promise((resolve) => {
       setTimeout(() => {
         resolve({
           id: 1,
+        });
+      }, 10);
+    });
+    return h.response(response);
+  },
+});
+
+server.route({
+  method: 'GET',
+  path: '/name',
+  handler: async (request, h) => {
+    const response = await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
           name: 'Abhinav Dhasmana',
+        });
+      }, 10);
+    });
+    return h.response(response);
+  },
+});
+
+server.route({
+  method: 'GET',
+  path: '/passion',
+  handler: async (request, h) => {
+    const response = await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
           enjoy_coding: true,
         });
       }, 10);
