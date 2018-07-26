@@ -27,7 +27,6 @@ const serverOptions = {
 const listener = Http2.createSecureServer(serverOptions);
 
 const server = Hapi.server({
-  // host: 'localhost',
   port: 8000,
   tls: true,
   listener,
@@ -35,6 +34,7 @@ const server = Hapi.server({
 
 const client = Http2.connect('https://localhost:8001', {
   ca: fs.readFileSync('../certificates/localhost-certificate.pem'),
+  rejectUnauthorized: false,
 });
 
 server.route({
@@ -44,10 +44,8 @@ server.route({
     try {
       const idPromise = new Promise((resolve) => {
         const req = client.request({ ':path': '/id' });
-        console.log('making 1');
         let data = '';
         req.on('data', (chunk) => {
-          console.log('data', chunk);
           data += chunk;
         });
         req.on('end', () => resolve(JSON.parse(data)));
@@ -56,7 +54,6 @@ server.route({
 
       const namePromise = new Promise((resolve) => {
         const req = client.request({ ':path': '/name' });
-        console.log('making 2');
         let data = '';
         req.on('data', (chunk) => { data += chunk; });
         req.on('end', () => resolve(JSON.parse(data)));
@@ -64,7 +61,6 @@ server.route({
 
       const passionPromise = new Promise((resolve) => {
         const req = client.request({ ':path': '/passion' });
-        console.log('making 3');
         let data = '';
         req.on('data', (chunk) => { data += chunk; });
         req.on('end', () => resolve(JSON.parse(data)));
@@ -72,12 +68,10 @@ server.route({
 
 
       const allResults = await Promise.all([idPromise, namePromise, passionPromise]);
-      console.log('here', allResults);
       const combinedResponse = allResults.reduce(
         (accumulator, currentValue) => ({ ...accumulator, ...currentValue }),
         {},
       );
-      console.log('here', combinedResponse);
       return h.response(combinedResponse);
     } catch (err) {
       throw Boom.clientTimeout(err);

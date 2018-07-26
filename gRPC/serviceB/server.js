@@ -35,8 +35,6 @@ server.addService(proto.SampleDataService.service, {
   GetPassion,
 });
 
-// server.addProtoService();
-
 server.bind('0.0.0.0:8001', grpc.ServerCredentials.createInsecure());
 
 server.start();

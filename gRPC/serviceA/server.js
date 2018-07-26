@@ -10,8 +10,6 @@ const proto = grpc.load(protoPath);
 const client = new proto.SampleDataService('localhost:8001', grpc.credentials.createInsecure());
 const getIdViagRPC = () => new Promise((resolve, reject) => {
   client.GetId({}, (err, response) => {
-    console.log('response', response);
-    console.log('err', err);
     if (!response.err) {
       resolve(response);
     } else {
@@ -21,8 +19,6 @@ const getIdViagRPC = () => new Promise((resolve, reject) => {
 });
 const getNameViagRPC = () => new Promise((resolve, reject) => {
   client.GetName({}, (err, response) => {
-    console.log('response', response);
-    console.log('err', err);
     if (!response.err) {
       resolve(response);
     } else {
@@ -32,8 +28,6 @@ const getNameViagRPC = () => new Promise((resolve, reject) => {
 });
 const getPassionViagRPC = () => new Promise((resolve, reject) => {
   client.GetPassion({}, (err, response) => {
-    console.log('response', response);
-    console.log('err', err);
     if (!response.err) {
       resolve(response);
     } else {
