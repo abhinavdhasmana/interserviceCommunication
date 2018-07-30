@@ -15,49 +15,25 @@ const options = {
   },
 };
 
+const port = process.env.PORT;
+console.log('port', port);
+
 const server = Hapi.server({
   host: '0.0.0.0',
-  port: 8001,
+  port,
 });
 
 server.route({
   method: 'GET',
-  path: '/id',
+  path: '/',
   handler: async (request, h) => {
     const response = await new Promise((resolve) => {
       setTimeout(() => {
         resolve({
           id: 1,
-        });
-      }, 10);
-    });
-    return h.response(response);
-  },
-});
-
-server.route({
-  method: 'GET',
-  path: '/name',
-  handler: async (request, h) => {
-    const response = await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
           name: 'Abhinav Dhasmana',
-        });
-      }, 10);
-    });
-    return h.response(response);
-  },
-});
+          enjoys_coding: true,
 
-server.route({
-  method: 'GET',
-  path: '/passion',
-  handler: async (request, h) => {
-    const response = await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          enjoy_coding: true,
         });
       }, 10);
     });
