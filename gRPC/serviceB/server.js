@@ -4,38 +4,24 @@ const proto = grpc.load('serviceB.proto');
 const server = new grpc.Server();
 
 
-const GetId = (call, callback) => {
+const GetSampleData = (call, callback) => {
   setTimeout(() => {
     callback(null, {
       id: 1,
-    });
-  }, 10);
-};
-
-const GetName = (call, callback) => {
-  setTimeout(() => {
-    callback(null, {
       name: 'Abhinav Dhasmana',
-    });
-  }, 10);
-};
-
-
-const GetPassion = (call, callback) => {
-  setTimeout(() => {
-    callback(null, {
-      enjoy_coding: true,
+      enjoys_coding: true,
     });
   }, 10);
 };
 
 server.addService(proto.SampleDataService.service, {
-  GetId,
-  GetName,
-  GetPassion,
+  GetSampleData,
 });
 
-server.bind('0.0.0.0:8001', grpc.ServerCredentials.createInsecure());
+const port = process.env.PORT;
+console.log('port', port);
+
+server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 
 server.start();
 console.log('grpc server is running');

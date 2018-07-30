@@ -1,21 +1,13 @@
 syntax = "proto3";
 
 service SampleDataService {
-  rpc GetId (Empty) returns (IdData) {}
-  rpc GetName (Empty) returns (NameData) {}
-  rpc GetPassion (Empty) returns (PassionData) {}
+  rpc GetSampleData (Empty) returns (SampleData) {}
 }
 
-message IdData {
+message SampleData {
   int32 id = 1;
-}
-
-message NameData {
-  string name = 1;
-}
-
-message PassionData {
-  bool enjoy_coding = 1;
+  string name = 2;
+  bool enjoys_coding = 3;
 }
 
 message Empty {}

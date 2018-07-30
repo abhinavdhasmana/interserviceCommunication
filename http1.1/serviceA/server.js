@@ -31,7 +31,6 @@ server.route({
         url: 'http://localhost:8001/',
         method: 'GET',
       });
-      console.log('data', response.data);
       return h.response(response.data);
     } catch (err) {
       throw Boom.clientTimeout(err);

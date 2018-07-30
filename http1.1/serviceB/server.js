@@ -16,7 +16,6 @@ const options = {
 };
 
 const port = process.env.PORT;
-console.log('port', port);
 
 const server = Hapi.server({
   host: '0.0.0.0',
