@@ -10,7 +10,7 @@
   "author": "Abhinav Dhasmana",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^2.6.4",
     "axios": "^0.18.0",
     "boom": "^7.2.0",
     "good": "^8.1.1",
